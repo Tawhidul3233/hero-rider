@@ -3,14 +3,21 @@ import './App.css';
 import Navbar from './Components/Navbar/Navbar';
 import Banner from './Components/Banner/Banner';
 import SingUpRider from './Components/SingUp/SingUpRider';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import SingUpLearner from './Components/SingUp/SingUpLearner';
+import ImageUploadForm from './Components/test';
 
 function App() {
   return (
-    <div >
+    <Router >
       <Navbar> </Navbar>
-      <Banner> </Banner>
-      <SingUpRider> </SingUpRider>
-    </div>
+      <ImageUploadForm> </ImageUploadForm>
+      <Routes>
+        <Route path='/' element={<Banner> </Banner> }></Route>
+        <Route path='/singup/herorider' element={<SingUpRider> </SingUpRider>}></Route>
+        <Route path='/singup/herolearner' element={<SingUpLearner> </SingUpLearner>}></Route>
+      </Routes>
+    </Router>
   );
 }
 

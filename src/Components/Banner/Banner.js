@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Banner = () => {
   return (
@@ -14,19 +15,19 @@ const Banner = () => {
           </p>
 
           <div class="mt-4 md:mt-8 ">
-            <a
+            <Link to='/singup/herolearner'
               href="#"
               class="inline-block rounded bg-emerald-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-yellow-400 mx-2 my-2"
             >
 
               Join as a Driving Learner.
-            </a>
-            <a
-              href="#"
+            </Link>
+            <Link
+              to='/singup/herorider'
               class="inline-block rounded bg-emerald-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-emerald-700 focus:outline-none focus:ring focus:ring-yellow-400 mx-2"
             >
-              Join as a rider
-            </a>
+              Join as a Rider
+            </Link>
           </div>
         </div>
       </div>

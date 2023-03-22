@@ -1,56 +1,45 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 
-const SingUpRider = () => {
-
+const SingUpLearner = () => {
   const { register, handleSubmit, reset } = useForm()
 
-  const submitUser = (data) => {
-    // console.log(data)
+  const handelSingup = async (data) => {
+    const imgUrls = [];
 
-    // const imageProfile = data.imageProfile[0];
-    // const Licence = data.Licence[0];
-    // const NamePalate = data.NamePalate[0];
-    // const NidFront = data.NidFront[0];
-    // const NidBack = data.NidBack[0];
+    const url = 'https://api.imgbb.com/1/upload?key=b6cd8a0df36da3243e927c420a1219b2';
 
-    // const formData = new FormData();
+    // Upload all the images and collect the image URLs in an array
+    for (let i = 1; i <= 5; i++) {
+      const formData = new FormData();
 
-    // formData.append('image', imageProfile)
-    // formData.append('image2', Licence)
-    // formData.append('image3', NamePalate)
-    // formData.append('image4', NidFront)
-    // formData.append('image5', NidBack)
+      const image = data[`image${i}`][0];
+      // console.log(image)
+      // formData.append(`image`, image, 'profileImg');
+      formData.append("image", image, `${image[i]}`);
 
+      const response = await axios.post(url, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      const photoURL = response.data.data.url;
+      if (`image${i}` === 'image1') {
+        imgUrls.push({ licance: photoURL });
+      } else if (`image${i}` === 'image2') {
+        imgUrls.push({ profileImg: photoURL });
+      } else if (`image${i}` === 'image3') {
+        imgUrls.push({ nidFront: photoURL });
+      } else if (`image${i}` === 'image4') {
+        imgUrls.push({ nidBack: photoURL });
+      } else {
+        imgUrls.push({ namePalate: photoURL });
+      }
+      // imgUrls.push(photoURL);
+    }
 
-    // const formData = new FormData();
+    console.log(imgUrls);
+  };
 
-    // formData.append('image', data.imageProfile[0]) ;
-    // formData.append('image2', data.Licence[0]);
-    // formData.append('image3', data.NamePalate[0]);
-    // formData.append('image4', data.NidFront[0]);
-    // formData.append('image5', data.NidBack[0]);
-
-    // const url = 'https://api.imgbb.com/1/upload?expiration=600&key=b6cd8a0df36da3243e927c420a1219b2';
-
-    // fetch(url, {
-    //   method: 'POST',
-    //   body: formData
-    // })
-    //   .then(res => res.json())
-    //   .then(imgData => {
-    //     // console.log(imgData.image.url)     // URL of first image
-    //     // console.log(imgData.image2.url)    // URL of second image
-    //     // console.log(imgData.image3.url)    // URL of third image
-    //     // console.log(imgData.image4.url)    // URL of fourth image
-    //     console.log(imgData)
-    //   })
-    //   .catch(err => console.log(err))
-
-  }
-
-
-  
 
 
   return (
@@ -74,14 +63,14 @@ const SingUpRider = () => {
             <h1
               class="mt-6 text-2xl font-bold text-gray-900 sm:text-3xl md:text-4xl"
             >
-              Join as a Hero Rider 🦑
+              Join as a Driving Learner.  🦑
             </h1>
 
             <p class="mt-4 leading-relaxed text-gray-500">
               Join the new Hero Rider Pink to enjoy complimentary upgrades to Priority Pickup, exclusive savings, and preferential pricing on Lux, XL, and Preferred rides.
             </p>
 
-            <form onSubmit={handleSubmit(submitUser)} action="#" class="mt-8 grid grid-cols-6 gap-6">
+            <form onSubmit={handleSubmit(handelSingup)} action="#" class="mt-8 grid grid-cols-6 gap-6">
               <div class="col-span-6 sm:col-span-3">
                 <label
                   for="FullName"
@@ -185,10 +174,10 @@ const SingUpRider = () => {
                 </label>
 
                 <input
-                  {...register('Licence')}
+                  {...register('image1')}
                   type="file"
                   id="Licence"
-                  name="Licence"
+                  name='licence'
                   class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
@@ -202,9 +191,10 @@ const SingUpRider = () => {
                 </label>
 
                 <input
-                  {...register('imageProfile')}
+                  {...register('image2')} required
                   type="file"
                   id="ProfileImg"
+                  name='profileImg'
                   class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
@@ -219,10 +209,10 @@ const SingUpRider = () => {
                 </label>
 
                 <input
-                  {...register('NidFront')}
+                  {...register('image3')}
                   type="file"
                   id="NidFront"
-                  name="NidFront"
+                  name='nidFront'
                   class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
@@ -236,10 +226,10 @@ const SingUpRider = () => {
                 </label>
 
                 <input
-                  {...register('NidBack')}
+                  {...register('image4')}
                   type="file"
                   id="NidBack"
-                  name="NidBack"
+                  name='nidBack'
                   class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
@@ -267,10 +257,10 @@ const SingUpRider = () => {
                 </label>
 
                 <input
-                  {...register('NamePalate')}
+                  {...register('image5')}
                   type="file"
                   id="NamePalate"
-                  name="NamePalate"
+                  name='namePalate'
                   class="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
                 />
               </div>
@@ -393,4 +383,4 @@ const SingUpRider = () => {
   );
 };
 
-export default SingUpRider;
+export default SingUpLearner;
